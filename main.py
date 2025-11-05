@@ -1,6 +1,6 @@
 # file: main.py
 # ============================================
-# ⚡ Voice Phishing Detection Unified System
+#  Voice Phishing Detection Unified System
 # TF-IDF + KoBERT 결합 (50% 이상 시 추가 판별)
 # ============================================
 
@@ -113,11 +113,11 @@ def predict_kobert(text, tokenizer, model):
     return phishing_prob
 
 # -------------------------------------------------------
-# ⚡ 통합 예측 로직
+# 통합 예측 로직
 # -------------------------------------------------------
 def unified_prediction(text, tfidf_model, vectorizer, tokenizer, kobert_model, danger_words):
     tfidf_prob = predict_tfidf(text, tfidf_model, vectorizer, danger_words)
-    print(f"\n⚡ TF-IDF 예측 확률: {tfidf_prob:.2f}%")
+    print(f"\n TF-IDF 예측 확률: {tfidf_prob:.2f}%")
 
     # TF-IDF 결과가 50% 이상이면 KoBERT 실행
     if tfidf_prob >= 50:
