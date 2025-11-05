@@ -1,6 +1,6 @@
 # file: models/evaluate_kobert.py
 # ============================================
-# ✅ KoBERT 평가 스크립트
+# KoBERT 평가 스크립트
 # ============================================
 
 import os
@@ -14,7 +14,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from torch.utils.data import Dataset, DataLoader
 
 # -----------------------------
-# ⚙️ 설정
+# 설정
 # -----------------------------
 MODEL_NAME = "skt/kobert-base-v1"
 MAX_LEN = 96
@@ -26,14 +26,14 @@ np.random.seed(SEED)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -----------------------------
-# 📂 경로
+# 경로
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "KorCCViD_v1.3_fullcleansed.csv")
 MODEL_DIR = os.path.join(BASE_DIR, "outputs", "models")
 
 # -----------------------------
-# 📦 데이터셋 클래스
+# 데이터셋 클래스
 # -----------------------------
 class KoBERTDataset(Dataset):
     def __init__(self, texts, labels, tokenizer, max_len):
@@ -62,10 +62,10 @@ class KoBERTDataset(Dataset):
         }
 
 # -----------------------------
-# 🚀 평가 함수
+# 평가 함수
 # -----------------------------
 def evaluate_kobert():
-    print("🚀 KoBERT 모델 평가 시작")
+    print("KoBERT 모델 평가 시작")
 
     # 최신 모델 로드
     model_files = sorted(
@@ -73,7 +73,7 @@ def evaluate_kobert():
         reverse=True
     )
     if not model_files:
-        raise FileNotFoundError("❌ 학습된 KoBERT 모델(.pt)을 찾을 수 없습니다.")
+        raise FileNotFoundError("학습된 KoBERT 모델(.pt)을 찾을 수 없습니다.")
     model_path = os.path.join(MODEL_DIR, model_files[0])
     print(f"✅ 최신 모델: {model_path}")
 
@@ -113,8 +113,8 @@ def evaluate_kobert():
     f1 = f1_score(labels, preds)
     report = classification_report(labels, preds, digits=4)
 
-    print("\n📊 KoBERT 분류 리포트:\n", report)
-    print(f"✅ Accuracy: {acc:.4f} | F1-score: {f1:.4f}")
+    print("\n KoBERT 분류 리포트:\n", report)
+    print(f"Accuracy: {acc:.4f} | F1-score: {f1:.4f}")
 
 if __name__ == "__main__":
     evaluate_kobert()

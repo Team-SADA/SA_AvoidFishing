@@ -8,7 +8,7 @@ from transformers import AutoTokenizer, AutoModel
 import torch
 
 # ------------------------------------------------------
-# 1️⃣ 숫자 및 키워드 기반 특징 추출 함수
+#  숫자 및 키워드 기반 특징 추출 함수
 # ------------------------------------------------------
 def extract_text_features(texts: list[str]) -> pd.DataFrame:
     """
@@ -38,17 +38,17 @@ def extract_text_features(texts: list[str]) -> pd.DataFrame:
 
 
 # ------------------------------------------------------
-# 2️⃣ TF-IDF 벡터화 함수
+#  TF-IDF 벡터화 함수
 # ------------------------------------------------------
 def get_tfidf_features(texts: list[str], max_features: int = 3000):
     vectorizer = TfidfVectorizer(max_features=max_features)
     tfidf_matrix = vectorizer.fit_transform(texts)
-    print(f"✅ TF-IDF 피처 생성 완료 ({tfidf_matrix.shape[1]}차원)")
+    print(f" TF-IDF 피처 생성 완료 ({tfidf_matrix.shape[1]}차원)")
     return tfidf_matrix, vectorizer
 
 
 # ------------------------------------------------------
-# 3️⃣ KoBERT 임베딩 추출 함수
+#  KoBERT 임베딩 추출 함수
 # ------------------------------------------------------
 def get_kobert_embeddings(texts: list[str], model_name="skt/kobert-base-v1", max_len=64):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -64,12 +64,12 @@ def get_kobert_embeddings(texts: list[str], model_name="skt/kobert-base-v1", max
         embeddings.append(cls_vector[0])
 
     embeddings = np.array(embeddings)
-    print(f"✅ KoBERT 임베딩 생성 완료 ({embeddings.shape})")
+    print(f" KoBERT 임베딩 생성 완료 ({embeddings.shape})")
     return embeddings
 
 
 # ------------------------------------------------------
-# 4️⃣ 전체 피처 결합 함수
+#  전체 피처 결합 함수
 # ------------------------------------------------------
 def build_features(texts: list[str], use_kobert=True):
     """
@@ -88,7 +88,7 @@ def build_features(texts: list[str], use_kobert=True):
     else:
         X = np.concatenate([tfidf_matrix.toarray(), df_features.values], axis=1)
 
-    print(f"✅ 전체 피처 결합 완료: shape={X.shape}")
+    print(f" 전체 피처 결합 완료: shape={X.shape}")
     return X, df_features.columns.tolist()
 
 

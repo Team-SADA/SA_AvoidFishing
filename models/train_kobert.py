@@ -1,6 +1,6 @@
 # file: models/train_kobert.py
 # ============================================
-# ✅ 안정형 + 속도 개선형 KoBERT 학습 스크립트
+#  안정형 + 속도 개선형 KoBERT 학습 스크립트
 # ============================================
 
 import os
@@ -15,14 +15,14 @@ from sklearn.metrics import f1_score, accuracy_score
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, get_linear_schedule_with_warmup
 
 # -----------------------------
-# ⚙️ 설정
+# ️ 설정
 # -----------------------------
 MODEL_NAME = "skt/kobert-base-v1"
-MAX_LEN = 96        # ✅ 128 → 96으로 단축 (속도 향상)
-BATCH_SIZE = 8      # ✅ 16 → 8로 조정 (메모리 절약)
-EPOCHS = 3          # ✅ 3 → 2 (훈련 속도 30~40% 향상)
+MAX_LEN = 96
+BATCH_SIZE = 8
+EPOCHS = 3
 LR = 2e-5
-WARMUP_RATIO = 0.05 # ✅ 조금 더 빠른 학습 시작
+WARMUP_RATIO = 0.05 #  조금 더 빠른 학습 시작
 SEED = 42
 
 torch.manual_seed(SEED)
@@ -30,7 +30,7 @@ np.random.seed(SEED)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -----------------------------
-# 📂 경로
+#  경로
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "KorCCViD_v1.3_fullcleansed.csv")
@@ -38,7 +38,7 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "outputs", "models")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -----------------------------
-# 📦 데이터셋 클래스
+#  데이터셋 클래스
 # -----------------------------
 class KoBERTDataset(Dataset):
     def __init__(self, texts, labels, tokenizer, max_len):
@@ -69,10 +69,10 @@ class KoBERTDataset(Dataset):
         }
 
 # -----------------------------
-# 🚀 학습 함수
+#  학습 함수
 # -----------------------------
 def train_kobert():
-    print("🚀 KoBERT 학습 시작")
+    print(" KoBERT 학습 시작")
 
     # -----------------------------
     # 데이터 로드 및 전처리
@@ -94,7 +94,7 @@ def train_kobert():
         stratify=df["label"]
     )
 
-    print("📁 학습 데이터:", len(X_train), "개 / 테스트 데이터:", len(X_test), "개")
+    print(" 학습 데이터:", len(X_train), "개 / 테스트 데이터:", len(X_test), "개")
 
     # -----------------------------
     # 토크나이저 및 데이터로더
@@ -148,7 +148,7 @@ def train_kobert():
         acc = accuracy_score(true_labels, preds)
         f1 = f1_score(true_labels, preds)
 
-        print(f"📎 Epoch {epoch+1}/{EPOCHS} | loss={avg_loss:.4f} | acc={acc:.4f} | f1={f1:.4f}")
+        print(f" Epoch {epoch+1}/{EPOCHS} | loss={avg_loss:.4f} | acc={acc:.4f} | f1={f1:.4f}")
 
         # -----------------------------
         # 검증 단계
@@ -169,7 +169,7 @@ def train_kobert():
             best_f1 = val_f1
             save_path = os.path.join(OUTPUT_DIR, f"kobert_{time.strftime('%Y%m%d_%H%M%S')}.pt")
             torch.save(model.state_dict(), save_path)
-            print(f"💾 Best 모델 저장: {save_path}")
+            print(f" Best 모델 저장: {save_path}")
 
     print(f"✅ 학습 완료! 총 소요 시간: {time.time() - start_time:.1f}초")
 

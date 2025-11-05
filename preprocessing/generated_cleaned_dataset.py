@@ -23,8 +23,8 @@ df["text"] = df["text"].astype(str).str.replace(r"[^가-힣0-9\s]", "", regex=Tr
 
 # 피처 생성 테스트
 features = extract_text_features(df["text"])
-print("✅ Features created:", features.shape)
+print(" Features created:", features.shape)
 
 # 저장
 df.to_csv(PROCESSED_PATH, index=False, encoding="utf-8-sig")
-print(f"💾 저장 완료: {PROCESSED_PATH}")
+print(f" 저장 완료: {PROCESSED_PATH}")

@@ -19,7 +19,7 @@ def clean_text(text):
     return text
 
 def make_danger_wordlist(threshold=3):
-    print("📘 위험 단어 리스트 생성 중...")
+    print(" 위험 단어 리스트 생성 중...")
     df = pd.read_csv(DATA_PATH)
     df["text"] = df["text"].apply(clean_text)
 
@@ -40,7 +40,7 @@ def make_danger_wordlist(threshold=3):
         for w in sorted(danger_words):
             f.write(w + "\n")
 
-    print(f"✅ 위험 단어 {len(danger_words)}개 저장 완료 → {OUTPUT_PATH}")
+    print(f" 위험 단어 {len(danger_words)}개 저장 완료 → {OUTPUT_PATH}")
     return danger_words
 
 if __name__ == "__main__":
