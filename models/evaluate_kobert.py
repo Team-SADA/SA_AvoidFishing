@@ -75,7 +75,7 @@ def evaluate_kobert():
     if not model_files:
         raise FileNotFoundError("학습된 KoBERT 모델(.pt)을 찾을 수 없습니다.")
     model_path = os.path.join(MODEL_DIR, model_files[0])
-    print(f"✅ 최신 모델: {model_path}")
+    print(f" 최신 모델: {model_path}")
 
     # 데이터 로드
     df = pd.read_csv(DATA_PATH)
